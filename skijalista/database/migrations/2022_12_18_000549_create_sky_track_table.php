@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('sky_track', function (Blueprint $table) {
             $table->id();
             $table->string('track_name');
+            $table->string('slug')->unique();
+            $table->foreignId('sky_resort_id');
             $table->string('track_length');
             $table->string('track_category');
             $table->timestamps();

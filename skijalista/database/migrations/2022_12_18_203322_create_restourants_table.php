@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sky_resort', function (Blueprint $table) {
+        Schema::create('restourants', function (Blueprint $table) {
             $table->id();
-            $table->string('slug');
-            $table->string('resort_name');
-            $table->text('resort_location');
-            $table->string('km_of_tracks');
+            $table->string('name');
+            $table->string('class');
+            $table->string('slug')->unique();
+            $table->foreignId('sky_resort_id');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sky_resort');
+        Schema::dropIfExists('restourants');
     }
 };

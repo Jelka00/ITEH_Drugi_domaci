@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sky_resort', function (Blueprint $table) {
-            $table->id();
-            $table->string('slug');
-            $table->string('resort_name');
-            $table->text('resort_location');
-            $table->string('km_of_tracks');
-            $table->timestamps();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->removeColumn('post_excerpt');
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sky_resort');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->text('post_excerpt');
+        });
     }
 };

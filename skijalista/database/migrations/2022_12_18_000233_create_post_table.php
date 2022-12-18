@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('post', function (Blueprint $table) {
             $table->id();
+            $table->string('slug')->unique();
+            $table->foreignId('sky_resort_id');
             $table->string('post_title');
             $table->text('post_content');
             $table->timestamps();

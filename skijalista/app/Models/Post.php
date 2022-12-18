@@ -11,6 +11,7 @@ class Post extends Model
 
     protected $fillabel = [
         'post_title',
-        'post_content',  
+        'post_content',
+        'post_excerpt',
     ];
 }
