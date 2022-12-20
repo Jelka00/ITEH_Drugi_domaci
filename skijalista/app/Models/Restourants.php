@@ -14,4 +14,8 @@ class Restourants extends Model
         'class',
         'slug',
     ];
+    
+    public function sky_resort(){
+        return $this->belongsTo(Sky_resort::class);
+    }
 }

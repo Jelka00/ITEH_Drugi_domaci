@@ -14,4 +14,12 @@ class Post extends Model
         'post_content',
         'post_excerpt',
     ];
+
+    public function sky_resort(){
+        return $this->belongsTo(Sky_resort::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

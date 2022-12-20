@@ -14,4 +14,8 @@ class Sky_track extends Model
         'track_length',
         'track_category',
     ];
+
+    public function sky_resort(){
+        return $this->belongsTo(Sky_resort::class);
+    }
 }
