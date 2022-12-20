@@ -9,10 +9,13 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillabel = [
+    protected $fillable = [
         'post_title',
         'post_content',
-        'post_excerpt',
+        'excerpt',
+        'slug',
+        'sky_resort_id',
+        'user_id',
     ];
 
     public function sky_resort(){

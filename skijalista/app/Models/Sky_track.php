@@ -13,6 +13,8 @@ class Sky_track extends Model
         'track_name',
         'track_length',
         'track_category',
+        'slug',
+        'sky_resort_id',
     ];
 
     public function sky_resort(){
