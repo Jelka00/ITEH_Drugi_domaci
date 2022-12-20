@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Sky_resort extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'resort_name',
+        'resort_location',
+        'track_km',
+        'slug',
+    ];
 
     public function posts(){
         return $this->hasMany(Post::class);

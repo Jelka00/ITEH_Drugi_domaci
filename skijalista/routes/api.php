@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RestourantsController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\RestourantsResource;
+use App\Http\Resources\SkyResortResource;
 use App\Http\Resources\SkyTrackResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +23,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::prefix('sky_resorts')
+    ->name('sky_resorts.')
+    ->group(function () {
+        Route::get('/', [SkyResortResource::class, 'index'])->name('index');
+        Route::post('/', [SkyResortResource::class, 'store'])->name('store');
+        Route::get('/{restourants_id}', [SkyResortResource::class, 'show'])->name('show');
+        Route::put('/{restourants_id}', [SkyResortResource::class, 'update'])->name('update');
+        Route::delete('/{restourants_id}', [SkyResortResource::class, 'destroy'])->name('destroy');
+    });
 Route::prefix('users')
     ->name('users.')
     ->group(function () {
@@ -47,3 +59,13 @@ Route::prefix('sky_tracks')
         Route::put('/{sky_track_id}', [SkyTrackResource::class, 'update'])->name('update');
         Route::delete('/{sky_track_id}', [SkyTrackResource::class, 'destroy'])->name('destroy');
     });
+Route::prefix('restourants')
+    ->name('restourants.')
+    ->group(function () {
+        Route::get('/', [RestourantsResource::class, 'index'])->name('index');
+        Route::post('/', [RestourantsResource::class, 'store'])->name('store');
+        Route::get('/{restourants_id}', [RestourantsResource::class, 'show'])->name('show');
+        Route::put('/{restourants_id}', [RestourantsResource::class, 'update'])->name('update');
+        Route::delete('/{restourants_id}', [RestourantsResource::class, 'destroy'])->name('destroy');
+    });
+
