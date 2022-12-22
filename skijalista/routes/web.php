@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\RestourantsController;
 use App\Http\Controllers\SkyTrackController;
 use App\Http\Controllers\UserController;
+use App\Http\Resources\RestourantsResource;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +21,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-//Route::get('/users', [UserController::class, 'index']);
-//Route::get('/users/{id}',[UserController::class, 'show']);
+//User routes
+Route::get('/users', [UserController::class, 'index']);
+Route::post('/users', [UserController::class, 'store']);
+Route::get('/users/{user}', [UserController::class, 'show']);
+Route::put('/users/{user}', [UserController::class, 'update']);
+Route::delete('/users/{user}', [UserController::class, 'destroy']);
+//Post routes
+Route::get('/posts', [PostController::class, 'index']);
+Route::post('/posts', [PostController::class, 'store']);
+Route::get('/posts/{post_id}', [PostController::class, 'show']);
+Route::put('/posts/{post_id}', [PostController::class, 'update']);
+Route::delete('/posts/{post_id}', [PostController::class, 'destroy']);
+//Restourant routes
+Route::get('/restourants', [RestourantsController::class, 'index']);
+Route::post('/restourants', [RestourantsController::class, 'store']);
+Route::get('/restourants/{restourants_id}', [RestourantsController::class, 'show']);
+Route::put('/restourants/{restourants_id}', [RestourantsController::class, 'update']);
+Route::delete('/restourants/{restourants_id}', [RestourantsController::class, 'destroy']);

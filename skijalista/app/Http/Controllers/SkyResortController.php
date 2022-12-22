@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SkyResortResource;
 use App\Models\Sky_resort;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,14 @@ class SkyResortController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sky_resort = Sky_resort::create([
+            'resort_name' => $request->resort_name,
+            'resort_location' => $request->resort_location,
+            'track_km' => $request->track_km,
+            'slug' => $request->slug,
+        ]);
+
+        return new SkyResortResource($sky_resort);
     }
 
     /**
@@ -44,9 +52,13 @@ class SkyResortController extends Controller
      * @param  \App\Models\Sky_resort  $sky_resort
      * @return \Illuminate\Http\Response
      */
-    public function show(Sky_resort $sky_resort)
+    public function show(Sky_resort $sky_resort_id)
     {
-        //
+        $sky_resort = Sky_resort::find($sky_resort_id);
+        if(is_null($sky_resort)){
+            return response()->json('Data not found!', 404);
+        }
+        return response()->json($sky_resort);
     }
 
     /**
@@ -69,7 +81,14 @@ class SkyResortController extends Controller
      */
     public function update(Request $request, Sky_resort $sky_resort)
     {
-        //
+        $sky_resort->update([
+            'resort_name' => $request->resort_name,
+            'resort_location' => $request->resort_location,
+            'track_km' => $request->track_km,
+            'slug' => $request->slug,
+        ]);
+
+        return new SkyResortResource($sky_resort);
     }
 
     /**
@@ -80,6 +99,6 @@ class SkyResortController extends Controller
      */
     public function destroy(Sky_resort $sky_resort)
     {
-        //
+        return $sky_resort->delete();
     }
 }

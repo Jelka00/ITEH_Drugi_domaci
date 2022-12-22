@@ -12,14 +12,15 @@ class RestourantsResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
+    public static $wrap = 'restourant';
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'class' => $this->class,
-            'slug'=>$this->slug,
-            'sky_resort_id'=>$this->sky_resort_id,
+            'id' => $this->resource->id,
+            'name' => $this->resource->name,
+            'class' => $this->resource->class,
+            'slug'=>$this->resource->slug,
+            'sky_resort'=>$this->resource->sky_resort,
         ];
     }
 }

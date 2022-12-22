@@ -6,7 +6,7 @@ use App\Http\Resources\RestourantsResource;
 use App\Models\Restourants;
 use Illuminate\Http\Request;
 
-class RestourantsController extends Controller
+class RestourantsControllerRest extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,8 @@ class RestourantsController extends Controller
      */
     public function index()
     {
-        return Restourants::collection(Restourants::all());
-        //return response()->json(Restourants::all());
+        $restourants = RestourantsResource::all();
+        return RestourantsResource::collection($restourants);
     }
 
     /**
@@ -37,14 +37,7 @@ class RestourantsController extends Controller
      */
     public function store(Request $request)
     {
-        $restourant = Restourants::create([
-            'name' => $request->name,
-            'class' => $request->class,
-            'slug' => $request->slug,
-            'sky_resort_id' => $request->sky_resort_id,
-        ]);
-
-        return new RestourantsResource($restourant);
+        //
     }
 
     /**
@@ -53,13 +46,9 @@ class RestourantsController extends Controller
      * @param  \App\Models\Restourants  $restourants
      * @return \Illuminate\Http\Response
      */
-    public function show(Restourants $restourants_id)
+    public function show(Restourants $restourants)
     {
-        $restourant = Restourants::find($restourants_id);
-        if(is_null($restourant)){
-            return response()->json('Data not found!', 404);
-        }
-        return response()->json($restourant);
+        return new RestourantsResource($restourants);
     }
 
     /**
@@ -82,16 +71,7 @@ class RestourantsController extends Controller
      */
     public function update(Request $request, Restourants $restourants)
     {
-        $restourants->update([
-            'post_title' => $request->post_title,
-            'post_content' => $request->post_content,
-            'excerpt' => $request->excerpt,
-            'slug' => $request->slug,
-            'sky_resort_id' => $request->sky_resort_id,
-            'user_id' => $request->user_id,
-        ]);
-
-        return new RestourantsResource($restourants);
+        //
     }
 
     /**
@@ -102,6 +82,6 @@ class RestourantsController extends Controller
      */
     public function destroy(Restourants $restourants)
     {
-        return $restourants->delete();
+        //
     }
 }

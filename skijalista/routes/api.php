@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostControllerRest;
 use App\Http\Controllers\RestourantsController;
 use App\Http\Controllers\UserController;
 use App\Http\Resources\RestourantsResource;
@@ -44,9 +45,11 @@ Route::prefix('users')
 Route::prefix('posts')
     ->name('posts.')
     ->group(function () {
+        Route::resource('/', PostControllerRest::class);
+        Route::resource('/{post_id}', PostControllerRest::class);
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::post('/', [PostController::class, 'store'])->name('store');
-        Route::get('/{post_id}', [PostController::class, 'show'])->name('show');
+        Route::get('/{post_id}', [PostController::class, 'show']);
         Route::put('/{post_id}', [PostController::class, 'update'])->name('update');
         Route::delete('/{post_id}', [PostController::class, 'destroy'])->name('destroy');
     });
@@ -62,10 +65,12 @@ Route::prefix('sky_tracks')
 Route::prefix('restourants')
     ->name('restourants.')
     ->group(function () {
+        //Route::resource('/', RestourantsResource::class);
+        //Route::resource('/{restourants_id}', RestourantsResource::class);
         Route::get('/', [RestourantsResource::class, 'index'])->name('index');
         Route::post('/', [RestourantsResource::class, 'store'])->name('store');
         Route::get('/{restourants_id}', [RestourantsResource::class, 'show'])->name('show');
         Route::put('/{restourants_id}', [RestourantsResource::class, 'update'])->name('update');
         Route::delete('/{restourants_id}', [RestourantsResource::class, 'destroy'])->name('destroy');
     });
-
+    
