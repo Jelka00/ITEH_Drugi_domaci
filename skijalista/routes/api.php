@@ -47,9 +47,9 @@ Route::prefix('posts')
     ->group(function () {
         Route::resource('/', PostControllerRest::class);
         Route::resource('/{post_id}', PostControllerRest::class);
-        Route::get('/', [PostController::class, 'index'])->name('index');
+        //Route::get('/', [PostController::class, 'index'])->name('index');
         Route::post('/', [PostController::class, 'store'])->name('store');
-        Route::get('/{post_id}', [PostController::class, 'show']);
+        //Route::get('/{post_id}', [PostController::class, 'show']);
         Route::put('/{post_id}', [PostController::class, 'update'])->name('update');
         Route::delete('/{post_id}', [PostController::class, 'destroy'])->name('destroy');
     });
