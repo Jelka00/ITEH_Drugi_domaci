@@ -6,6 +6,7 @@ use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -55,7 +56,7 @@ class PostController extends Controller
             'excerpt' => $request->excerpt,
             'slug' => $request->slug,
             'sky_resort_id' => $request->sky_resort_id,
-            'user_id' => $request->user_id,
+            'user_id' => Auth::user()->id
         ]);
 
         return response()->json(['Post created successfully.', new PostResource($post)]);
