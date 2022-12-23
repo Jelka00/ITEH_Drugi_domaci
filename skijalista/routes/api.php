@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostControllerRest;
 use App\Http\Controllers\RestourantsController;
@@ -73,4 +74,14 @@ Route::prefix('restourants')
         Route::put('/{restourants_id}', [RestourantsResource::class, 'update'])->name('update');
         Route::delete('/{restourants_id}', [RestourantsResource::class, 'destroy'])->name('destroy');
     });
-    
+
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+
+    Route::group(['middleware' => ['auth:sanctum']], function(){
+        Route::get('/profile', function(Request $request){
+            return auth()->user();
+        });
+        Route::resource('posts', PostController::class)->only(['update', 'store', 'destroy']);
+        Route::post('/logout', [AuthController::class, 'logout']);
+    });

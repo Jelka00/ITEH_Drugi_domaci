@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -36,6 +37,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'post_title' => 'required|string|max:225',
+            'post_content' => 'required',
+            'excerpt' => 'required',
+            'slug' => 'required|string|max:100',
+            'sky_resort_id' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
         $post = Post::create([
             'post_title' => $request->post_title,
             'post_content' => $request->post_content,
@@ -45,7 +58,8 @@ class PostController extends Controller
             'user_id' => $request->user_id,
         ]);
 
-        return new PostResource($post);
+        return response()->json(['Post created successfully.', new PostResource($post)]);
+        //return new PostResource($post);
     }
 
     /**
@@ -83,6 +97,17 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $validator = Validator::make($request->all(),[
+            'post_title' => 'required|string|max:225',
+            'post_content' => 'required',
+            'excerpt' => 'required',
+            'slug' => 'required|string|max:100',
+            'sky_resort_id' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
         $post->update([
             'post_title' => $request->post_title,
             'post_content' => $request->post_content,
@@ -91,8 +116,8 @@ class PostController extends Controller
             'sky_resort_id' => $request->sky_resort_id,
             'user_id' => $request->user_id,
         ]);
-
-        return new PostResource($post);
+        return response()->json(['Post updated successfully.', new PostResource($post)]);
+        //return new PostResource($post);
     }
 
     /**
@@ -104,5 +129,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         return $post->delete();
+        return response()->json('Post created successfully.');
     }
 }

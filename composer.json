@@ -1,5 +1,6 @@
 {
     "require": {
-        "laravel/installer": "^4.2"
+        "laravel/installer": "^4.2",
+        "laravel/sanctum": "^3.0"
     }
 }
