@@ -13,7 +13,7 @@ class Restourants extends Model
         'name',
         'class',
         'slug',
-        'sky_resot_id',
+        'sky_resort_id',
     ];
     
     public function sky_resort(){

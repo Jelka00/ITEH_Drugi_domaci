@@ -115,7 +115,7 @@ class PostController extends Controller
             'excerpt' => $request->excerpt,
             'slug' => $request->slug,
             'sky_resort_id' => $request->sky_resort_id,
-            'user_id' => $request->user_id,
+            'user_id' => $request->user_id
         ]);
         return response()->json(['Post updated successfully.', new PostResource($post)]);
         //return new PostResource($post);
@@ -130,6 +130,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         return $post->delete();
-        return response()->json('Post created successfully.');
+        return response()->json('Post deleted successfully.');
     }
 }

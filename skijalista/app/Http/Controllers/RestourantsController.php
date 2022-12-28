@@ -15,8 +15,8 @@ class RestourantsController extends Controller
      */
     public function index()
     {
-        return Restourants::collection(Restourants::all());
-        //return response()->json(Restourants::all());
+        //return Restourants::collection(Restourants::all());
+        return response()->json(Restourants::all());
     }
 
     /**
@@ -55,11 +55,11 @@ class RestourantsController extends Controller
      */
     public function show(Restourants $restourants_id)
     {
-        $restourant = Restourants::find($restourants_id);
-        if(is_null($restourant)){
+        $restourants = Restourants::find($restourants_id);
+        if(is_null($restourants)){
             return response()->json('Data not found!', 404);
         }
-        return response()->json($restourant);
+        return response()->json($restourants);
     }
 
     /**
@@ -80,9 +80,9 @@ class RestourantsController extends Controller
      * @param  \App\Models\Restourants  $restourants
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Restourants $restourants)
+    public function update(Request $request, Restourants $restourants_id)
     {
-        $restourants->update([
+        $restourants_id->update([
             'post_title' => $request->post_title,
             'post_content' => $request->post_content,
             'excerpt' => $request->excerpt,
@@ -91,7 +91,7 @@ class RestourantsController extends Controller
             'user_id' => $request->user_id,
         ]);
 
-        return new RestourantsResource($restourants);
+        return new RestourantsResource($restourants_id);
     }
 
     /**
@@ -100,8 +100,8 @@ class RestourantsController extends Controller
      * @param  \App\Models\Restourants  $restourants
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Restourants $restourants)
+    public function destroy(Restourants $restourants_id)
     {
-        return $restourants->delete();
+        return $restourants_id->delete();
     }
 }

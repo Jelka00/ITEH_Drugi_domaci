@@ -79,16 +79,16 @@ class SkyResortController extends Controller
      * @param  \App\Models\Sky_resort  $sky_resort
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sky_resort $sky_resort)
+    public function update(Request $request, Sky_resort $sky_resort_id)
     {
-        $sky_resort->update([
+        $sky_resort_id->update([
             'resort_name' => $request->resort_name,
             'resort_location' => $request->resort_location,
             'track_km' => $request->track_km,
             'slug' => $request->slug,
         ]);
 
-        return new SkyResortResource($sky_resort);
+        return new SkyResortResource($sky_resort_id);
     }
 
     /**

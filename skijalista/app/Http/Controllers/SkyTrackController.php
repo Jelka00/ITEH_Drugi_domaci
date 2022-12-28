@@ -80,9 +80,9 @@ class SkyTrackController extends Controller
      * @param  \App\Models\Sky_track  $sky_track
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sky_track $sky_track)
+    public function update(Request $request, Sky_track $sky_track_id)
     {
-        $sky_track->update([
+        $sky_track_id->update([
             'track_name' => $request->track_name,
             'track_length' => $request->track_length,
             'track_category' => $request->track_category,
@@ -90,7 +90,7 @@ class SkyTrackController extends Controller
             'sky_resort_id' => $request->sky_resort_id,
         ]);
 
-        return new SkyTrackResource($sky_track);
+        return new SkyTrackResource($sky_track_id);
     }
 
     /**
