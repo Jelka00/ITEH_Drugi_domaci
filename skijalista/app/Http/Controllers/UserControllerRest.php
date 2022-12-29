@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class UserControllerRest extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return UserResource::collection($user);
+        return response()->json(User::all());
     }
 
     /**
@@ -44,8 +42,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        return new UserResource($user);
+        return response()->json(['User created successfully.', new UserResource($user)]);
     }
 
     /**
@@ -54,13 +51,13 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show($user_id)
+    public function show(User $user)
     {
-        $user = User::find($user_id);
-        if (is_null($user)) {
+        $users = User::find($user);
+        if (is_null($users)) {
             return response()->json('Data not found!', 404);
         }
-        return response()->json($user);
+        return response()->json($users);
     }
 
     /**
@@ -81,15 +78,14 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user_id)
+    public function update(Request $request, User $user)
     {
-        $user_id->update([
+        $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
-        return new UserResource($user_id);
+        return response()->json(['User updated successfully.', new UserResource($user)]);
     }
 
     /**
@@ -98,9 +94,9 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user_id)
+    public function destroy(User $user)
     {
-        $user_id->delete();
+        $user->delete();
         return response()->json('User deleted successfully.');
     }
 }

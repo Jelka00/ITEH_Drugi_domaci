@@ -15,7 +15,8 @@ class SkyTrackController extends Controller
      */
     public function index()
     {
-        return response()->json(Sky_track::all());
+        $sky_track = Sky_track::all();
+        return SkyTrackResource::collection($sky_track);
     }
 
     /**
@@ -55,11 +56,12 @@ class SkyTrackController extends Controller
      */
     public function show(Sky_track $sky_track_id)
     {
-        $sky_track = Sky_track::find($sky_track_id);
-        if(is_null($sky_track)){
+        /*$sky_tracks = Sky_track::find($sky_track);
+        if (is_null($sky_tracks)) {
             return response()->json('Data not found!', 404);
         }
-        return response()->json($sky_track);
+        return response()->json($sky_tracks);*/
+        return new SkyTrackResource($sky_track_id);
     }
 
     /**
@@ -99,8 +101,9 @@ class SkyTrackController extends Controller
      * @param  \App\Models\Sky_track  $sky_track
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sky_track $sky_track)
+    public function destroy(Sky_track $sky_track_id)
     {
-        return $sky_track->delete();
+        $sky_track_id->delete();
+        return response()->json('Sky track deleted successfully.');
     }
 }

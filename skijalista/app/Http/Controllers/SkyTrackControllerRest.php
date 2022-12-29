@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\RestourantsResource;
-use App\Models\Restourants;
+use App\Http\Resources\SkyTrackResource;
+use App\Models\Sky_track;
 use Illuminate\Http\Request;
 
-class RestourantsControllerRest extends Controller
+class SkyTrackControllerRest extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class RestourantsControllerRest extends Controller
      */
     public function index()
     {
-        return response()->json(Restourants::all());
+        return response()->json(Sky_track::all());
     }
 
     /**
@@ -36,38 +36,38 @@ class RestourantsControllerRest extends Controller
      */
     public function store(Request $request)
     {
-        $restourant = Restourants::create([
-            'name' => $request->name,
-            'class' => $request->class,
+        $sky_track = Sky_track::create([
+            'track_name' => $request->track_name,
+            'track_length' => $request->track_length,
+            'track_category' => $request->track_category,
             'slug' => $request->slug,
             'sky_resort_id' => $request->sky_resort_id,
         ]);
-
-        return response()->json(['Restourant created successfully.', new RestourantsResource($restourant)]);
+        return response()->json(['Sky track created successfully.', new SkyTrackResource($sky_track)]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Restourants  $restourants
+     * @param  \App\Models\Sky_track  $sky_track
      * @return \Illuminate\Http\Response
      */
-    public function show(Restourants $restourant)
+    public function show(Sky_track $sky_track)
     {
-        $restourants = Restourants::find($restourant);
-        if (is_null($restourants)) {
+        $sky_tracks = Sky_track::find($sky_track);
+        if (is_null($sky_tracks)) {
             return response()->json('Data not found!', 404);
         }
-        return response()->json($restourants);
+        return response()->json($sky_tracks);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Restourants  $restourants
+     * @param  \App\Models\Sky_track  $sky_track
      * @return \Illuminate\Http\Response
      */
-    public function edit(Restourants $restourants)
+    public function edit(Sky_track $sky_track)
     {
         //
     }
@@ -76,29 +76,30 @@ class RestourantsControllerRest extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Restourants  $restourants
+     * @param  \App\Models\Sky_track  $sky_track
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Restourants $restourant)
+    public function update(Request $request, Sky_track $sky_track)
     {
-        $restourant->update([
-            'name' => $request->name,
-            'class' => $request->class,
+        $sky_track->update([
+            'track_name' => $request->track_name,
+            'track_length' => $request->track_length,
+            'track_category' => $request->track_category,
             'slug' => $request->slug,
             'sky_resort_id' => $request->sky_resort_id,
         ]);
-        return response()->json(['Restourant updated successfully.', new RestourantsResource($restourant)]);
+        return response()->json(['Sky track updated successfully.', new SkyTrackResource($sky_track)]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Restourants  $restourants
+     * @param  \App\Models\Sky_track  $sky_track
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Restourants $restourant)
+    public function destroy(Sky_track $sky_track)
     {
-        $restourant->delete();
-        return response()->json('Restourant deleted successfully.');
+        $sky_track->delete();
+        return response()->json('Sky track deleted successfully.');
     }
 }

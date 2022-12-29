@@ -4,12 +4,13 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostControllerRest;
 use App\Http\Controllers\RestourantsController;
+use App\Http\Controllers\RestourantsControllerRest;
 use App\Http\Controllers\SkyResortController;
+use App\Http\Controllers\SkyResortControllerRest;
 use App\Http\Controllers\SkyTrackController;
+use App\Http\Controllers\SkyTrackControllerRest;
 use App\Http\Controllers\UserController;
-use App\Http\Resources\RestourantsResource;
-use App\Http\Resources\SkyResortResource;
-use App\Http\Resources\SkyTrackResource;
+use App\Http\Controllers\UserControllerRest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::prefix('sky_resorts')
+//REST API RUTE
+Route::resource('posts', PostControllerRest::class);
+Route::resource('restourants', RestourantsControllerRest::class);
+Route::resource('sky_tracks', SkyTrackControllerRest::class);
+Route::resource('sky_resorts', SkyResortControllerRest::class);
+Route::resource('users', UserControllerRest::class);
+
+
+
+/*Route::prefix('sky_resorts')
     ->name('sky_resorts.')
     ->group(function () {
         Route::get('/', [SkyResortController::class, 'index'])->name('index');
@@ -48,24 +58,23 @@ Route::prefix('users')
 Route::prefix('posts')
     ->name('posts.')
     ->group(function () {
-        Route::resource('/', PostControllerRest::class);
-        //Route::resource('/{post_id}', PostControllerRest::class);
         //Route::get('/', [PostController::class, 'index'])->name('index');
         //Route::post('/', [PostController::class, 'store'])->name('store');
         //Route::get('/{post_id}', [PostController::class, 'show']);
         //Route::put('/{post}', [PostController::class, 'update'])->name('update');
         //Route::delete('/{post_id}', [PostController::class, 'destroy'])->name('destroy');
     });
+
 Route::prefix('sky_tracks')
     ->name('sky_tracks.')
     ->group(function () {
         //Route::resource('/', SkyTrackController::class);
         //Route::resource('/{sky_track_id}', SkyTrackController::class);
-        Route::get('/', [SkyTrackController::class, 'index'])->name('index');
-        Route::post('/', [SkyTrackController::class, 'store'])->name('store');
-        Route::get('/{sky_track_id}', [SkyTrackController::class, 'show'])->name('show');
-        Route::put('/{sky_track_id}', [SkyTrackController::class, 'update'])->name('update');
-        Route::delete('/{sky_track_id}', [SkyTrackController::class, 'destroy'])->name('destroy');
+        //Route::get('/', [SkyTrackController::class, 'index'])->name('index');
+        //Route::post('/', [SkyTrackController::class, 'store'])->name('store');
+        //Route::get('/{sky_track_id}', [SkyTrackController::class, 'show'])->name('show');
+        //Route::put('/{sky_track_id}', [SkyTrackController::class, 'update'])->name('update');
+        //Route::delete('/{sky_track_id}', [SkyTrackController::class, 'destroy'])->name('destroy');
     });
 Route::prefix('restourants')
     ->name('restourants.')
@@ -77,18 +86,18 @@ Route::prefix('restourants')
         //Route::get('/{restourants_id}', [RestourantsController::class, 'show'])->name('show');
         Route::put('/{restourants_id}', [RestourantsController::class, 'update'])->name('update');
         Route::delete('/{restourants_id}', [RestourantsController::class, 'destroy'])->name('destroy');
-    });
+    });*/
 
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-    Route::group(['middleware' => ['auth:sanctum']], function(){
-        Route::get('/profile', function(Request $request){
-            return auth()->user();
-        });
-        Route::resource('posts', PostController::class)->only(['store']);
-        Route::get('posts/{post_id}', [PostController::class, 'show'])->name('show');
-        Route::put('posts/{post}', [PostController::class, 'update'])->name('update');
-        Route::delete('posts/{post}', [PostController::class, 'destroy'])->name('destroy');
-        Route::post('/logout', [AuthController::class, 'logout']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/profile', function (Request $request) {
+        return auth()->user();
     });
+    Route::resource('posts', PostController::class)->only(['store']);
+    Route::get('posts/{post_id}', [PostController::class, 'show'])->name('show');
+    Route::put('posts/{post_id}', [PostController::class, 'update'])->name('update');
+    Route::delete('posts/{post_id}', [PostController::class, 'destroy'])->name('destroy');
+    Route::post('/logout', [AuthController::class, 'logout']);
+});

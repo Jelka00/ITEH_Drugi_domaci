@@ -6,7 +6,7 @@ use App\Http\Resources\SkyResortResource;
 use App\Models\Sky_resort;
 use Illuminate\Http\Request;
 
-class SkyResortController extends Controller
+class SkyResortControllerRest extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +15,7 @@ class SkyResortController extends Controller
      */
     public function index()
     {
-        $sky_resort = Sky_resort::all();
-        return SkyResortResource::collection($sky_resort);
+        return response()->json(Sky_resort::all());
     }
 
     /**
@@ -43,7 +42,7 @@ class SkyResortController extends Controller
             'track_km' => $request->track_km,
             'slug' => $request->slug,
         ]);
-        return new SkyResortResource($sky_resort);
+        return response()->json(['Sky resort created successfully.', new SkyResortResource($sky_resort)]);
     }
 
     /**
@@ -52,9 +51,13 @@ class SkyResortController extends Controller
      * @param  \App\Models\Sky_resort  $sky_resort
      * @return \Illuminate\Http\Response
      */
-    public function show(Sky_resort $sky_resort_id)
+    public function show(Sky_resort $sky_resort)
     {
-        return new SkyResortResource($sky_resort_id);
+        $sky_resorts = Sky_resort::find($sky_resort);
+        if (is_null($sky_resorts)) {
+            return response()->json('Data not found!', 404);
+        }
+        return response()->json($sky_resorts);
     }
 
     /**
@@ -75,16 +78,15 @@ class SkyResortController extends Controller
      * @param  \App\Models\Sky_resort  $sky_resort
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sky_resort $sky_resort_id)
+    public function update(Request $request, Sky_resort $sky_resort)
     {
-        $sky_resort_id->update([
+        $sky_resort->update([
             'resort_name' => $request->resort_name,
             'resort_location' => $request->resort_location,
             'track_km' => $request->track_km,
             'slug' => $request->slug,
         ]);
-
-        return new SkyResortResource($sky_resort_id);
+        return response()->json(['Sky resort updated successfully.', new SkyResortResource($sky_resort)]);
     }
 
     /**
@@ -93,9 +95,9 @@ class SkyResortController extends Controller
      * @param  \App\Models\Sky_resort  $sky_resort
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sky_resort $sky_resort_id)
+    public function destroy(Sky_resort $sky_resort)
     {
-        $sky_resort_id->delete();
+        $sky_resort->delete();
         return response()->json('Sky resort deleted successfully.');
     }
 }
